@@ -22,13 +22,16 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 	// il faut ajouter un nouveau noeud en indice de fin de liste qui est l'addition des 2 noeud orphelin
 	// il faut faire cela jusque a ce qque la taille du denriner element de symbole est egale a la taille 
 	// de la liste sans doublon
-	cout << tab_length << endl;
 
-	string temp_char = "";
+	int h ;
+	const int inital_tab_lenght = tab_length;
+
+	for(h = 0; h < inital_tab_lenght -1; h++){
+	cout << tab_length << endl;
 	for (int m = 0; m < tab_length; m++) {
 		int n;
 		for (n = 0; n < tab_length; n++) {
-			if (m != n && (tableau_f[m] + tableau_f[n]) <= f_min && (tableau_parent[m]) == -1 && tableau_parent[n] == -1){
+			if (m != n && (tableau_f[m] + tableau_f[n]) <= f_min && (tableau_parent[m] == -1 && tableau_parent[n] == -1)){
 
 				f_min = tableau_f[m] + tableau_f[n];
 				idx_min_1 = m;
@@ -41,6 +44,7 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 		}
 
 	}
+	f_min = 9999;
 	cout << "voici les 2 indices min choisi : " << idx_min_1 << "  et " << idx_min_2 <<endl; 
 	cout << "voci la taille du tableau :  " << tab_length << endl;
 	tableau_parent[idx_min_1] = tab_length;
@@ -50,6 +54,10 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 	tableau_enfant_gauche[tab_length] = -1;
 	tableau_enfant_droit[tab_length] = -1;
 	tableau_f[tab_length] = tableau_f[idx_min_1] + tableau_f[idx_min_2];
+	tableau_enfant_droit[tab_length] = idx_min_2;
+	tableau_enfant_gauche[tab_length] = idx_min_1;
+
+
 
 	// ici terminer la boucle for qui ecrit plusieur charactere
 	int v;
@@ -79,7 +87,6 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 
 
 
-
 	// permet de print pour test
 
 	for (int j = 0; j < tab_length; j++) {
@@ -88,8 +95,7 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 
 
 	}
-
-
+	}
 }
 // enfant droit supprimer car non neccesaire vu que nous avons un arbre binaire
 // il suffit d'un enfant et d'un else pour representer l'aute ca nous permet de avoir une variable en moins.
