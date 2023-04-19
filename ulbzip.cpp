@@ -4,9 +4,9 @@
 
 
 
-void huffman(char tableau_symbole[MAX_NOEUDS], int tableau_f[MAX_NOEUDS], int tableau_parent[MAX_NOEUDS] , int tableau_enfant_gauche[MAX_NOEUDS], int tableau_enfant_droit[MAX_NOEUDS], int tab_length) {
+void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tableau_f[MAX_NOEUDS], int tableau_parent[MAX_NOEUDS] , int tableau_enfant_gauche[MAX_NOEUDS], int tableau_enfant_droit[MAX_NOEUDS], int tab_length) {
 
-	cout << tab_length << endl;
+	cout << "voici la taille du tableau donner : " << tab_length << endl;
 
 	//maintenant il faut rechercher les 2 indice avec la frequence la plus petite
 
@@ -50,6 +50,13 @@ void huffman(char tableau_symbole[MAX_NOEUDS], int tableau_f[MAX_NOEUDS], int ta
 	tableau_enfant_gauche[tab_length] = -1;
 	tableau_enfant_droit[tab_length] = -1;
 	tableau_f[tab_length] = tableau_f[idx_min_1] + tableau_f[idx_min_2];
+
+	// ici terminer la boucle for qui ecrit plusieur charactere
+	int v;
+	for(v )
+	tableau_symbole[tab_length] = "ab"
+
+
 
 	tab_length += 1;
 
@@ -154,7 +161,7 @@ int main(int argc, char *argv[]) {
 	////////////////////////////
 
 	int longeur = getlenchar(message);
-	char tableau_symbole[MAX_NOEUDS];
+	char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII];
 	int tableau_f[MAX_NOEUDS];
 	int tableau_parent[MAX_NOEUDS];
 	int tableau_enfant_gauche[MAX_NOEUDS];
@@ -165,28 +172,25 @@ int main(int argc, char *argv[]) {
 	for (i = 0; i < longeur - 2; i++) {
 
 		//ajoute un symbole dans un tableau si il ne se trouve pas deja dedans
-		//initialise un symbole et la frequene du symbole	
-		if (isIn(tableau_symbole, message[i]) == false) {
+		//initialise un symbole et la frequene du symbole
+		if (isIn_2d(tableau_symbole, message[i], indexeurChar) == false) {
 
-			tableau_symbole[indexeurChar] = message[i];
+			tableau_symbole[indexeurChar][0] = message[i];
 			tableau_f[indexeurChar] = 0;
 			tableau_parent[indexeurChar] = -1;
 			tableau_enfant_gauche[indexeurChar] = -1;
 			tableau_enfant_droit[indexeurChar] = -1;
 			indexeurChar += 1;
-
+		
 		}
 
 	}
 
-	int lenght_tab_symb = getlenchar(tableau_symbole);
-	cout << " voici la longeur du tableau symbole  :  " << lenght_tab_symb << endl;
-
 
 	int x;
-	for (x = 0; x < longeur; x++) {
+	for (x = 0; x < longeur - 2; x++) {
 
-		int index = get_index_char(tableau_symbole, message[x], lenght_tab_symb);
+		int index = get_index_char_2d(tableau_symbole, message[x], indexeurChar);
 		tableau_f[index] += 1;
 
 

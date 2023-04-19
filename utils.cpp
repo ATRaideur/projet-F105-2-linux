@@ -151,7 +151,6 @@ bool isIn(char suite_charactere[], char charactere) {
         if (suite_charactere[i] == charactere) {
             return true;
         }
-
     }
     return false;
 
@@ -216,4 +215,27 @@ int get_index_char(char array[], char charactere, int size) {
 
     }
     return index;
+}
+
+int get_index_char_2d(char array[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], char charactere, int size) {
+
+    int i;
+    int index = 0;
+    for (i = 0; i <= size; i++) {
+        if (array[i][0] == charactere) index = i;
+
+    }
+    return index;
+}
+
+bool isIn_2d(char suite_charactere[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], char charactere, int longeur) {
+
+    int i;
+    for (i = 0; i < longeur; i++) {
+        if (suite_charactere[i][0] == charactere) {
+            return true;
+        }
+    }
+    return false;
+
 }
