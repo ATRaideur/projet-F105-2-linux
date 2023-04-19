@@ -53,8 +53,20 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 
 	// ici terminer la boucle for qui ecrit plusieur charactere
 	int v;
-	for(v )
-	tableau_symbole[tab_length] = "ab"
+	int total_lenght_symb_1 = getlenchar(tableau_symbole[idx_min_1]);
+	for(v = 0; v < total_lenght_symb_1; v++){
+	tableau_symbole[tab_length][v] = tableau_symbole[idx_min_1][v];
+	}
+	cout << "voici la longueur du premier char  : "<<total_lenght_symb_1 << endl;
+	int y;
+	int total_lenght_symb_2 = getlenchar(tableau_symbole[idx_min_2]);
+	cout << "voici la longueur du deuxieme char  : "<<total_lenght_symb_2 << endl;
+
+	int total = total_lenght_symb_2 + total_lenght_symb_1;
+	cout << "et voici le total : "<< total << endl;
+	for(y = 0 ; y < total ; y++){
+	tableau_symbole[tab_length][y + total_lenght_symb_1] = tableau_symbole[idx_min_2][y];
+	}
 
 
 

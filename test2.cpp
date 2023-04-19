@@ -8,10 +8,9 @@ using namespace std;
 
 int main() {
 
-	int liste[50] = { 6,7,9,10,29,17,92,82,4,6,19,2,3,28 };
+	char liste[50] = { 'a'};
 
-	int lenght = getlentabint(liste);
-	cout << lenght << endl;
+	cout << getlenchar(liste) << endl;
 
 
 }
