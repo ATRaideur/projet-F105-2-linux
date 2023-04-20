@@ -1,1 +1,1 @@
-j'ai 13 ans
+comment allez vous les amis, je test le decodage et l'encodage d'un text grace a mon projet c++ de info f105

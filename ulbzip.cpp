@@ -174,11 +174,9 @@ int main(int argc, char *argv[]) {
 	static char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE];
 
 	chargerTexte(cheminMessage,message);
-	chargerArbre(cheminArbre, parent, enfantGauche, enfantDroite, symboles,
-		nombreNoeuds);
-	abreACode(parent, enfantGauche, symboles, code);
-	encoderMessage(code, message, messageEncode);
-	sauverFichierTexte(cheminMessageEncode, messageEncode);
+	chargerArbre(cheminArbre, parent, enfantGauche, enfantDroite, symboles,nombreNoeuds);
+
+
 	////////////////////////////
 
 	int longeur = getlenchar(message);
@@ -190,7 +188,7 @@ int main(int argc, char *argv[]) {
 	int indexeurChar = 0;
 
 	int i;
-	for (i = 0; i < longeur - 2; i++) {
+	for (i = 0; i < longeur - 1; i++) {
 
 		//ajoute un symbole dans un tableau si il ne se trouve pas deja dedans
 		//initialise un symbole et la frequene du symbole
@@ -209,7 +207,7 @@ int main(int argc, char *argv[]) {
 
 
 	int x;
-	for (x = 0; x < longeur - 2; x++) {
+	for (x = 0; x < longeur - 1; x++) {
 
 		int index = get_index_char_2d(tableau_symbole, message[x], indexeurChar);
 		tableau_f[index] += 1;
@@ -219,5 +217,9 @@ int main(int argc, char *argv[]) {
 	///////////////////////////////////////////
 
 	huffman(tableau_symbole, tableau_f, tableau_parent, tableau_enfant_gauche, tableau_enfant_droit, indexeurChar, cheminArbre);
+
+	abreACode(tableau_parent, tableau_enfant_gauche, tableau_symbole, code);
+	encoderMessage(code, message, messageEncode);
+	sauverFichierTexte(cheminMessageEncode, messageEncode);
 	return 0;
 }
