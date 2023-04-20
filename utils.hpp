@@ -84,3 +84,5 @@ int getlentabint(int* tabint);
 int get_index_char_2d(char array[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], char charactere, int size);
 
 bool isIn_2d(char suite_charactere[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], char charactere, int longeur);
+
+int sauverArbre(const char* chemin, int* parent, int* gauche, int* droite, char symboles[][TAILLE_ALPHABET_ASCII], int nombreNoeuds);

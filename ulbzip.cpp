@@ -4,9 +4,9 @@
 
 
 
-void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tableau_f[MAX_NOEUDS], int tableau_parent[MAX_NOEUDS] , int tableau_enfant_gauche[MAX_NOEUDS], int tableau_enfant_droit[MAX_NOEUDS], int tab_length) {
+void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tableau_f[MAX_NOEUDS], int tableau_parent[MAX_NOEUDS] , int tableau_enfant_gauche[MAX_NOEUDS], int tableau_enfant_droit[MAX_NOEUDS], int tab_length, const char *	 cheminArbre) {
 
-	cout << "voici la taille du tableau donner : " << tab_length << endl;
+	//cout << "voici la taille du tableau donner : " << tab_length << endl;
 
 	//maintenant il faut rechercher les 2 indice avec la frequence la plus petite
 
@@ -27,7 +27,7 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 	const int inital_tab_lenght = tab_length;
 
 	for(h = 0; h < inital_tab_lenght -1; h++){
-	cout << tab_length << endl;
+	//cout << tab_length << endl;
 	for (int m = 0; m < tab_length; m++) {
 		int n;
 		for (n = 0; n < tab_length; n++) {
@@ -45,8 +45,8 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 
 	}
 	f_min = 9999;
-	cout << "voici les 2 indices min choisi : " << idx_min_1 << "  et " << idx_min_2 <<endl; 
-	cout << "voci la taille du tableau :  " << tab_length << endl;
+	//cout << "voici les 2 indices min choisi : " << idx_min_1 << "  et " << idx_min_2 <<endl; 
+	//cout << "voci la taille du tableau :  " << tab_length << endl;
 	tableau_parent[idx_min_1] = tab_length;
 	tableau_parent[idx_min_2] = tab_length;
 	//tableau_symbole[indexeurChar] = temp_char;
@@ -65,13 +65,13 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 	for(v = 0; v < total_lenght_symb_1; v++){
 	tableau_symbole[tab_length][v] = tableau_symbole[idx_min_1][v];
 	}
-	cout << "voici la longueur du premier char  : "<<total_lenght_symb_1 << endl;
+	//cout << "voici la longueur du premier char  : "<<total_lenght_symb_1 << endl;
 	int y;
 	int total_lenght_symb_2 = getlenchar(tableau_symbole[idx_min_2]);
-	cout << "voici la longueur du deuxieme char  : "<<total_lenght_symb_2 << endl;
+	//cout << "voici la longueur du deuxieme char  : "<<total_lenght_symb_2 << endl;
 
 	int total = total_lenght_symb_2 + total_lenght_symb_1;
-	cout << "et voici le total : "<< total << endl;
+	//cout << "et voici le total : "<< total << endl;
 	for(y = 0 ; y < total ; y++){
 	tableau_symbole[tab_length][y + total_lenght_symb_1] = tableau_symbole[idx_min_2][y];
 	}
@@ -81,13 +81,16 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 	tab_length += 1;
 
 
-	cout << tableau_f[idx_min_1] << "    " << tableau_f[idx_min_2] << endl;
-	cout << tableau_symbole[idx_min_1] << "      " << tableau_symbole[idx_min_2] << endl;
+	//cout << tableau_f[idx_min_1] << "    " << tableau_f[idx_min_2] << endl;
+	//cout << tableau_symbole[idx_min_1] << "      " << tableau_symbole[idx_min_2] << endl;
 
 
 
 
 	// permet de print pour test
+
+	
+	}
 
 	for (int j = 0; j < tab_length; j++) {
 
@@ -95,7 +98,7 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 
 
 	}
-	}
+	sauverArbre( cheminArbre, tableau_parent, tableau_enfant_gauche, tableau_enfant_droit, tableau_symbole, 2* inital_tab_lenght -1);
 }
 // enfant droit supprimer car non neccesaire vu que nous avons un arbre binaire
 // il suffit d'un enfant et d'un else pour representer l'aute ca nous permet de avoir une variable en moins.
@@ -215,6 +218,6 @@ int main(int argc, char *argv[]) {
 	}
 	///////////////////////////////////////////
 
-	huffman(tableau_symbole, tableau_f, tableau_parent, tableau_enfant_gauche, tableau_enfant_droit, indexeurChar);
+	huffman(tableau_symbole, tableau_f, tableau_parent, tableau_enfant_gauche, tableau_enfant_droit, indexeurChar, cheminArbre);
 	return 0;
 }
