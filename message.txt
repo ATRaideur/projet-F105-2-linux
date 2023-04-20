@@ -1,1 +1,1 @@
-comment allez vous les amis, je test le decodage et l'encodage d'un text grace a mon projet c++ de info f105
+je test encore et encore

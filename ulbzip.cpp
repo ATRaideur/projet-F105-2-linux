@@ -128,25 +128,42 @@ void encoderMessage(char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE],
 	char message[TAILLE_MAX_MESSAGE], 
 	char (&messageEncode)[TAILLE_MAX_MESSAGE_ENCODE]) {
 
-	string 	messageEncodage = "";
-	
+	//string 	messageEncodage = "";
+	char* messageCoder = new char[1000];
+	int messageCoderIndex = 0; // Compteur pour "messageCoder"
 	int i;
-	for(i = 0; i < getlenchar(message); i++){
+	for(i = 0; i < getlenchar(message) ; i++){
 		int charactereInt = static_cast<int>(message[i]); // Convertir le caractère en entier
 		
 		if (*code[charactereInt] != '1' && *code[charactereInt] != '0'){
 		cout << "vous avez inseré un mauvais charactére"<< endl;
 		}
 		
-		messageEncodage += code[charactereInt];
+		//messageEncodage += code[charactereInt];
+
+		for(int j = 0; j < getlenchar(code[charactereInt]); j++){
+		messageCoder[messageCoderIndex] = code[charactereInt][j];
+		cout << messageCoder[messageCoderIndex];
+		//cout << messageCoder << endl;
+		messageCoderIndex += 1;
+		}
+
+
+
 	}
 	// conversion du string car fonction "sauverDandAdresseMemoire" a besoin d'un char
-	char* convertedstring = const_cast<char*>(messageEncodage.c_str());
-	sauverDansAdresseMemoire(messageEncode, convertedstring);
+	//char* convertedstring = const_cast<char*>(messageEncodage.c_str());
+	//sauverDansAdresseMemoire(messageEncode, convertedstring);
+	cout << messageCoderIndex << endl;
 
+	for(int l =0; l< messageCoderIndex; l++){
+	messageEncode[l] = messageCoder[l] ;
+	}
 
+	delete[] messageCoder;
 
 }
+
 
 int main(int argc, char *argv[]) {
 	const char *cheminMessage;
@@ -174,7 +191,6 @@ int main(int argc, char *argv[]) {
 	static char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE];
 
 	chargerTexte(cheminMessage,message);
-	chargerArbre(cheminArbre, parent, enfantGauche, enfantDroite, symboles,nombreNoeuds);
 
 
 	////////////////////////////
@@ -188,7 +204,7 @@ int main(int argc, char *argv[]) {
 	int indexeurChar = 0;
 
 	int i;
-	for (i = 0; i < longeur - 1; i++) {
+	for (i = 0; i < longeur; i++) {
 
 		//ajoute un symbole dans un tableau si il ne se trouve pas deja dedans
 		//initialise un symbole et la frequene du symbole
@@ -207,7 +223,7 @@ int main(int argc, char *argv[]) {
 
 
 	int x;
-	for (x = 0; x < longeur - 1; x++) {
+	for (x = 0; x < longeur; x++) {
 
 		int index = get_index_char_2d(tableau_symbole, message[x], indexeurChar);
 		tableau_f[index] += 1;
@@ -217,8 +233,8 @@ int main(int argc, char *argv[]) {
 	///////////////////////////////////////////
 
 	huffman(tableau_symbole, tableau_f, tableau_parent, tableau_enfant_gauche, tableau_enfant_droit, indexeurChar, cheminArbre);
-
-	abreACode(tableau_parent, tableau_enfant_gauche, tableau_symbole, code);
+	chargerArbre(cheminArbre, parent, enfantGauche, enfantDroite, symboles,nombreNoeuds);
+	abreACode(parent, enfantGauche, symboles, code);
 	encoderMessage(code, message, messageEncode);
 	sauverFichierTexte(cheminMessageEncode, messageEncode);
 	return 0;
