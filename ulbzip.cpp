@@ -127,7 +127,7 @@ void encoderMessage(char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE],
 		}
 	}
 
-	cout << messageCoderIndex << endl;
+	//cout << messageCoderIndex << endl;
 	//ecrit tout les bit dans le fichier text
 	// ici faut modifer (prendre 8 bit ensuite
 	// les convertir en nombre decimale)
@@ -135,9 +135,52 @@ void encoderMessage(char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE],
 	// et stocker 5 ca dans le tableau de unsigned char (ca vas etre stocker sous forme de charactere mais pas grave)
 	// ensuite pour le decodage prendre 5 le convertir en int (car ca sera un charactere) et le convertir sous binaire 8 bits)
 	// et decoder
-	for(int l =0; l< messageCoderIndex; l++){
-	messageEncode[l] = messageCoder[l] ;
+
+	int indexeur_bit = 0;
+	int valeur_binaire = 0b00000000;
+	cout << "voici la valeur bianire: " << valeur_binaire << endl;
+	int compteur_bits = 7;
+	int l;
+	for( l =0; l< messageCoderIndex; l++){
+	
+		if(messageCoder[l] == '1'){
+			if (compteur_bits == 8) compteur_bits -= 1; 
+			cout << compteur_bits << endl;
+			valeur_binaire += expo(2, (compteur_bits));
+
+		}
+
+		compteur_bits -= 1;
+		if (compteur_bits < 0){
+
+			compteur_bits = 7;
+			messageEncode[indexeur_bit] = valeur_binaire ;
+
+			cout << " voici la valeur dans la tableau : " << (int)messageEncode[indexeur_bit] <<endl;
+			indexeur_bit += 1;
+			valeur_binaire = 0b00000000;
+
+			}
+
+
+
 	}
+
+	if ((l == messageCoderIndex) && (compteur_bits != 0) ){
+			cout << "voici le compter de bits :"  << compteur_bits << endl;
+			messageEncode[indexeur_bit]  = valeur_binaire;
+			cout << " voici la drniere valeur dans la tableau : " << (int)messageEncode[indexeur_bit] <<endl;
+
+			int surplus = compteur_bits + 1;
+			messageEncode[indexeur_bit + 1] = surplus;
+
+			cout << " voici le reste :  : " << (int)messageEncode[indexeur_bit + 1] <<endl;
+
+			}
+
+	cout << "test : " << (int)messageEncode[3];
+
+
 
 	delete[] messageCoder;
 

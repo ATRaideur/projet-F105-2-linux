@@ -253,3 +253,13 @@ bool isIn_2d(char suite_charactere[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], char char
     return false;
 
 }
+
+int expo(int base, int exp){
+
+    int rep = 1;
+    int i;
+    for(i=0; i < exp; i++){
+        rep *= base;
+        }
+    return rep;
+}
