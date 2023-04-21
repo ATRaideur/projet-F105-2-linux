@@ -87,8 +87,22 @@ int sauverFichierTexte(const char* cheminTexte, char* texte) {
 
     ofstream out(cheminTexte);
     if (out) {
-        out.write((char*)texte, strlen(texte));
+        out.write(( char*)texte, strlen(texte));
         out.close();
+        return 0;
+    }
+    else {
+        fprintf(stderr, "Fichier %s ne peut pas être ouvert\n",
+            cheminTexte);
+        return 1;
+    }
+}
+
+int sauverFichierTexteBis(const char* cheminTexte, unsigned char* texte) {
+
+    ofstream out(cheminTexte);
+    if (out) {
+        out.write(reinterpret_cast<const char*>(texte), strlen(reinterpret_cast<const char*>(texte)));        out.close();
         return 0;
     }
     else {

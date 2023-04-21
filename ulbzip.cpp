@@ -6,50 +6,43 @@
 
 void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tableau_f[MAX_NOEUDS], int tableau_parent[MAX_NOEUDS] , int tableau_enfant_gauche[MAX_NOEUDS], int tableau_enfant_droit[MAX_NOEUDS], int tab_length, const char *	 cheminArbre) {
 
-	//cout << "voici la taille du tableau donner : " << tab_length << endl;
-
-	//maintenant il faut rechercher les 2 indice avec la frequence la plus petite
-
-	//fonction pour trouver le min ajouter a utils.cpp
-
+	//initialisations de valeurs sentinels .
 	int idx_min_1 = 0;
 	int idx_min_2 = 0;
 	int f_min = 99999;
 
-	// prendre minimum
 
-	//il faut modifier les parent des 2 valeurs ajouter
-	// il faut ajouter un nouveau noeud en indice de fin de liste qui est l'addition des 2 noeud orphelin
-	// il faut faire cela jusque a ce qque la taille du denriner element de symbole est egale a la taille 
-	// de la liste sans doublon
-
-	int h ;
+	// longeur du tableau inital.
 	const int inital_tab_lenght = tab_length;
 
+	int h ;
+	//boucle qui pose tout les nouveau : noeud arbres avec 0 ou 2 enfants = 2*n - 1
+	//on a deja n dans tableau donc boucle : longeur du tableau pour le * 2 et - 1
 	for(h = 0; h < inital_tab_lenght -1; h++){
 	//cout << tab_length << endl;
 	for (int m = 0; m < tab_length; m++) {
 		int n;
 		for (n = 0; n < tab_length; n++) {
+			//recherche des 2 minimums orphelins dans le tableau
 			if (m != n && (tableau_f[m] + tableau_f[n]) <= f_min && (tableau_parent[m] == -1 && tableau_parent[n] == -1)){
-
+				
+				//permet de trouver la frequence des mot minimum 
 				f_min = tableau_f[m] + tableau_f[n];
 				idx_min_1 = m;
 				idx_min_2 = n;
-				
-				//modification des parent
-
-				
+								
 			}
 		}
 
 	}
+	//remise de la valeurs sentinel a defaut.
 	f_min = 9999;
-	//cout << "voici les 2 indices min choisi : " << idx_min_1 << "  et " << idx_min_2 <<endl; 
-	//cout << "voci la taille du tableau :  " << tab_length << endl;
+
+
+	//initialisation des nouveau noeud parents
+	//et modification des parent des noeud orphelins
 	tableau_parent[idx_min_1] = tab_length;
 	tableau_parent[idx_min_2] = tab_length;
-	//tableau_symbole[indexeurChar] = temp_char;
 	tableau_parent[tab_length] = -1;
 	tableau_enfant_gauche[tab_length] = -1;
 	tableau_enfant_droit[tab_length] = -1;
@@ -59,47 +52,34 @@ void huffman(char tableau_symbole[MAX_NOEUDS][TAILLE_ALPHABET_ASCII], int tablea
 
 
 
-	// ici terminer la boucle for qui ecrit plusieur charactere
+	// permet de concaterner dans le tableau les symbole du min 1
 	int v;
 	int total_lenght_symb_1 = getlenchar(tableau_symbole[idx_min_1]);
 	for(v = 0; v < total_lenght_symb_1; v++){
-	tableau_symbole[tab_length][v] = tableau_symbole[idx_min_1][v];
+		tableau_symbole[tab_length][v] = tableau_symbole[idx_min_1][v];
 	}
-	//cout << "voici la longueur du premier char  : "<<total_lenght_symb_1 << endl;
+
 	int y;
 	int total_lenght_symb_2 = getlenchar(tableau_symbole[idx_min_2]);
-	//cout << "voici la longueur du deuxieme char  : "<<total_lenght_symb_2 << endl;
-
 	int total = total_lenght_symb_2 + total_lenght_symb_1;
-	//cout << "et voici le total : "<< total << endl;
+	// permet de concaterner dans le tableau les symbole du min 2
 	for(y = 0 ; y < total ; y++){
-	tableau_symbole[tab_length][y + total_lenght_symb_1] = tableau_symbole[idx_min_2][y];
+		tableau_symbole[tab_length][y + total_lenght_symb_1] = tableau_symbole[idx_min_2][y];
+	}
+	tab_length += 1; //permet d'agrandir le tableau de 1 case a chaque iteration
 	}
 
 
-
-	tab_length += 1;
-
-
-	//cout << tableau_f[idx_min_1] << "    " << tableau_f[idx_min_2] << endl;
-	//cout << tableau_symbole[idx_min_1] << "      " << tableau_symbole[idx_min_2] << endl;
-
-
-
-
-	// permet de print pour test
-
-	
-	}
-
+	//permet de print pour debug
 	for (int j = 0; j < tab_length; j++) {
 
 		cout << tableau_symbole[j] << "   " << tableau_f[j] << "   " << tableau_parent[j] << "    " << tableau_enfant_droit[j] << "    " << tableau_enfant_gauche[j] << endl;
-
-
 	}
 	sauverArbre( cheminArbre, tableau_parent, tableau_enfant_gauche, tableau_enfant_droit, tableau_symbole, 2* inital_tab_lenght -1);
 }
+
+
+
 // enfant droit supprimer car non neccesaire vu que nous avons un arbre binaire
 // il suffit d'un enfant et d'un else pour representer l'aute ca nous permet de avoir une variable en moins.
 void abreACode(int parent[MAX_NOEUDS], 
@@ -126,12 +106,12 @@ void abreACode(int parent[MAX_NOEUDS],
 
 void encoderMessage(char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE], 
 	char message[TAILLE_MAX_MESSAGE], 
-	char (&messageEncode)[TAILLE_MAX_MESSAGE_ENCODE]) {
+	unsigned char (messageEncode)[TAILLE_MAX_MESSAGE_ENCODE]) {
 
-	//string 	messageEncodage = "";
-	char* messageCoder = new char[1000];
+	unsigned char* messageCoder = new unsigned char[TAILLE_MAX_MESSAGE];
 	int messageCoderIndex = 0; // Compteur pour "messageCoder"
 	int i;
+	//erit tout les bit dans le unsigned char : messageCoder
 	for(i = 0; i < getlenchar(message) ; i++){
 		int charactereInt = static_cast<int>(message[i]); // Convertir le caractère en entier
 		
@@ -139,23 +119,22 @@ void encoderMessage(char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE],
 		cout << "vous avez inseré un mauvais charactére"<< endl;
 		}
 		
-		//messageEncodage += code[charactereInt];
 
 		for(int j = 0; j < getlenchar(code[charactereInt]); j++){
 		messageCoder[messageCoderIndex] = code[charactereInt][j];
 		cout << messageCoder[messageCoderIndex];
-		//cout << messageCoder << endl;
 		messageCoderIndex += 1;
 		}
-
-
-
 	}
-	// conversion du string car fonction "sauverDandAdresseMemoire" a besoin d'un char
-	//char* convertedstring = const_cast<char*>(messageEncodage.c_str());
-	//sauverDansAdresseMemoire(messageEncode, convertedstring);
-	cout << messageCoderIndex << endl;
 
+	cout << messageCoderIndex << endl;
+	//ecrit tout les bit dans le fichier text
+	// ici faut modifer (prendre 8 bit ensuite
+	// les convertir en nombre decimale)
+	// exemple : donc 8 bit '0'0'0'0'0'1'0'1' = 5
+	// et stocker 5 ca dans le tableau de unsigned char (ca vas etre stocker sous forme de charactere mais pas grave)
+	// ensuite pour le decodage prendre 5 le convertir en int (car ca sera un charactere) et le convertir sous binaire 8 bits)
+	// et decoder
 	for(int l =0; l< messageCoderIndex; l++){
 	messageEncode[l] = messageCoder[l] ;
 	}
@@ -180,13 +159,12 @@ int main(int argc, char *argv[]) {
 		return 1;
 	}
    
-	static char message[TAILLE_MAX_MESSAGE];
-	static char messageEncode[TAILLE_MAX_MESSAGE_ENCODE];
-
-	static int nombreNoeuds;
-	static int parent[MAX_NOEUDS];
-	static int enfantGauche[MAX_NOEUDS];
-	static int enfantDroite[MAX_NOEUDS];
+	char* message = new char[TAILLE_MAX_MESSAGE];
+	unsigned char* messageEncode = new unsigned char[TAILLE_MAX_MESSAGE_ENCODE];
+	int* nombreNoeuds = new int;
+	int* parent = new int[MAX_NOEUDS];
+	int* enfantGauche = new int[MAX_NOEUDS];
+	int* enfantDroite = new int[MAX_NOEUDS];
 	static char symboles[MAX_NOEUDS][TAILLE_ALPHABET_ASCII];
 	static char code[TAILLE_ALPHABET_ASCII][TAILLE_MAX_MOT_CODE];
 
@@ -205,7 +183,6 @@ int main(int argc, char *argv[]) {
 
 	int i;
 	for (i = 0; i < longeur; i++) {
-
 		//ajoute un symbole dans un tableau si il ne se trouve pas deja dedans
 		//initialise un symbole et la frequene du symbole
 		if (isIn_2d(tableau_symbole, message[i], indexeurChar) == false) {
@@ -216,7 +193,6 @@ int main(int argc, char *argv[]) {
 			tableau_enfant_gauche[indexeurChar] = -1;
 			tableau_enfant_droit[indexeurChar] = -1;
 			indexeurChar += 1;
-		
 		}
 
 	}
@@ -233,9 +209,16 @@ int main(int argc, char *argv[]) {
 	///////////////////////////////////////////
 
 	huffman(tableau_symbole, tableau_f, tableau_parent, tableau_enfant_gauche, tableau_enfant_droit, indexeurChar, cheminArbre);
-	chargerArbre(cheminArbre, parent, enfantGauche, enfantDroite, symboles,nombreNoeuds);
+	chargerArbre(cheminArbre, parent, enfantGauche, enfantDroite, symboles,nombreNoeuds[0]);
 	abreACode(parent, enfantGauche, symboles, code);
 	encoderMessage(code, message, messageEncode);
-	sauverFichierTexte(cheminMessageEncode, messageEncode);
-	return 0;
+	sauverFichierTexteBis(cheminMessageEncode, messageEncode);
+
+	delete[] message;
+	delete[] messageEncode;
+	delete nombreNoeuds;
+	delete[] parent;
+	delete[] enfantDroite;
+	delete[] enfantGauche;
+ 	return 0;
 }

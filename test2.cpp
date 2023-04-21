@@ -8,9 +8,11 @@ using namespace std;
 
 int main() {
 
-	char liste[50] = { 'a'};
+	unsigned char liste[50];
+	liste[0] = 70;
+	liste[1] = 71; 	
 
-	cout << getlenchar(liste) << endl;
+	cout << (int)liste[1] << endl;
 
 
 }

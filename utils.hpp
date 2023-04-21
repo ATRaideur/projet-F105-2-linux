@@ -26,6 +26,9 @@ int chargerArbre(const char* chemin, int* parent, int* gauche, int* droite, char
  **/
 int sauverFichierTexte(const char* cheminTexte, char * texte);
 
+int sauverFichierTexteBis(const char* cheminTexte, unsigned char* texte);
+
+
 
 /**
  * permet d'avoir l'indice d'un element dans un tableaux
